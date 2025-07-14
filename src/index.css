@@ -1,0 +1,5 @@
+/* Replace the @tailwind directives with the compiled Tailwind CSS if not using Tailwind's build process */
+/* Example: */
+/* @import 'tailwindcss/base.css'; */
+/* @import 'tailwindcss/components.css'; */
+/* @import 'tailwindcss/utilities.css'; */
