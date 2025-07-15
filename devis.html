@@ -594,6 +594,67 @@
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+  (function() {
+    emailjs.init('e9JDv8i8tUwGR_5XX');
+  })();
+
+  const form = document.getElementById('quoteForm');
+  const successMessage = document.getElementById('successMessage');
+  const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const formData = {
+      name: form.name.value,
+      email: form.email.value,
+      phone: form.phone.value,
+      eventType: form.eventType.value,
+      eventDate: form.eventDate.value,
+      guestCount: form.guestCount.value,
+      budget: form.budget.value,
+      message: form.message.value
+    };
+
+    emailjs.send('service_83q7yzr', 'template_76pqm8l', formData)
+      .then(() => {
+        successMessage.style.display = 'block';
+        downloadPdfBtn.style.display = 'block';
+
+        // Reset form after 3 seconds
+        setTimeout(() => {
+          successMessage.style.display = 'none';
+          downloadPdfBtn.style.display = 'none';
+          form.reset();
+        }, 3000);
+      }, (error) => {
+        alert('Erreur lors de l\'envoi du message. Veuillez réessayer.');
+        console.error('EmailJS error:', error);
+      });
+  });
+
+  downloadPdfBtn.addEventListener('click', function() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text('Demande de Devis - VERUS BTP', 10, 20);
+    doc.setFontSize(12);
+    doc.text(`Nom: ${form.name.value}`, 10, 40);
+    doc.text(`Email: ${form.email.value}`, 10, 50);
+    doc.text(`Téléphone: ${form.phone.value}`, 10, 60);
+    doc.text(`Type d'événement: ${form.eventType.value}`, 10, 70);
+    doc.text(`Date prévue: ${form.eventDate.value}`, 10, 80);
+    doc.text(`Nombre d'invités: ${form.guestCount.value}`, 10, 90);
+    doc.text(`Budget: ${form.budget.value}`, 10, 100);
+    doc.text('Message:', 10, 110);
+    doc.text(form.message.value, 10, 120);
+
+    doc.save('devis-verus-btp.pdf');
+  });
+</script>
 </body>
 </html>
