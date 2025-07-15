@@ -831,8 +831,8 @@ const projectsData = {
             'Efficacité énergétique optimisée'
         ],
         images: [
-            'https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&w=600',
-            'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=600'
+            'public/images/realisation.jpeg',
+            'public/images/realisation.jpeg',
         ]
     },
     'centre-commercial': {
@@ -854,7 +854,7 @@ const projectsData = {
             'Accessibilité PMR complète'
         ],
         images: [
-            'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=600'
+            'public/images/realisation2.jpeg',
         ]
     },
     'immeuble-bureaux': {
@@ -876,7 +876,7 @@ const projectsData = {
             'Certification environnementale'
         ],
         images: [
-            'https://images.pexels.com/photos/1486222/pexels-photo-1486222.jpeg?auto=compress&cs=tinysrgb&w=600'
+            'public/images/realisation3.jpeg'
         ]
     },
     'villa-contemporaine': {
@@ -898,7 +898,7 @@ const projectsData = {
             'Matériaux haut de gamme'
         ],
         images: [
-            'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=600'
+            'public/images/realisation4.jpeg'
         ]
     },
     'complexe-hospitalier': {
@@ -920,7 +920,7 @@ const projectsData = {
             'Espaces de convalescence'
         ],
         images: [
-            'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=600'
+            'public/images/realisation5.jpeg'
         ]
     },
     'complexe-educatif': {
@@ -942,7 +942,7 @@ const projectsData = {
             'Espaces verts pédagogiques'
         ],
         images: [
-            'https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg?auto=compress&cs=tinysrgb&w=600'
+            'public/images/realisation6.jpeg'
         ]
     },
     'hotel-luxe': {
@@ -964,7 +964,7 @@ const projectsData = {
             'Activités nautiques'
         ],
         images: [
-            'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=600'
+            'public/images/realisation7.jpeg'
         ]
     },
     'logements-sociaux': {
@@ -986,7 +986,7 @@ const projectsData = {
             'Transports en commun'
         ],
         images: [
-            'https://images.pexels.com/photos/1109541/pexels-photo-1109541.jpeg?auto=compress&cs=tinysrgb&w=600'
+            'public/images/realisation8.jpeg'
         ]
     }
 };
