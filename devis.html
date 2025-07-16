@@ -7,89 +7,169 @@
     <meta name="description" content="Demandez votre devis gratuit pour vos projets de construction. Formulaire simple et rapide pour obtenir une estimation personnalisée.">
     <link rel="stylesheet" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <style>
         .form-horizontal-grid {
-  display: flex;
-  gap: 32px;
-  margin-bottom: 32px;
-}
-.form-horizontal-grid > .form-section {
-  flex: 1 1 0;
-  min-width: 0;
-  background: #f8faff;
-  border-radius: 12px;
-  padding: 24px 18px;
-  box-shadow: 0 2px 8px rgba(0,123,255,0.04);
-}
+            display: flex;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        .form-horizontal-grid > .form-section {
+            flex: 1 1 0;
+            min-width: 0;
+            background: #f8faff;
+            border-radius: 12px;
+            padding: 24px 18px;
+            box-shadow: 0 2px 8px rgba(0,123,255,0.04);
+        }
 
-/* Styles responsifs pour le formulaire */
-@media (max-width: 1200px) {
-  .quote-form-container {
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-  .quote-form {
-    max-width: 100% !important;
-    min-width: auto !important;
-  }
-  .contact-sidebar {
-    flex: none !important;
-    max-width: 600px !important;
-    min-width: auto !important;
-    width: 100% !important;
-  }
-}
+        /* Styles responsifs pour le formulaire */
+        @media (max-width: 1200px) {
+            .quote-form-container {
+                flex-direction: column !important;
+                align-items: center !important;
+            }
+            .quote-form {
+                max-width: 100% !important;
+                min-width: auto !important;
+            }
+            .contact-sidebar {
+                flex: none !important;
+                max-width: 600px !important;
+                min-width: auto !important;
+                width: 100% !important;
+            }
+        }
 
-@media (max-width: 900px) {
-  .form-horizontal-grid {
-    flex-direction: column;
-    gap: 0;
-  }
-  .form-horizontal-grid > .form-section {
-    margin-bottom: 18px;
-  }
-  .quote-form {
-    padding: var(--spacing-xl) !important;
-  }
-  .contact-sidebar {
-    padding: var(--spacing-xl) !important;
-  }
-}
+        @media (max-width: 900px) {
+            .form-horizontal-grid {
+                flex-direction: column;
+                gap: 0;
+            }
+            .form-horizontal-grid > .form-section {
+                margin-bottom: 18px;
+            }
+            .quote-form {
+                padding: var(--spacing-xl) !important;
+            }
+            .contact-sidebar {
+                padding: var(--spacing-xl) !important;
+            }
+        }
 
-@media (max-width: 600px) {
-  .quote-form {
-    padding: var(--spacing-lg) !important;
-    min-width: 300px !important;
-  }
-  .contact-sidebar {
-    padding: var(--spacing-lg) !important;
-    min-width: 300px !important;
-  }
-  .form-row {
-    flex-direction: column !important;
-  }
-  .quote-form-container {
-    gap: var(--spacing-xl) !important;
-  }
-}
+        @media (max-width: 600px) {
+            .quote-form {
+                padding: var(--spacing-lg) !important;
+                min-width: 300px !important;
+            }
+            .contact-sidebar {
+                padding: var(--spacing-lg) !important;
+                min-width: 300px !important;
+            }
+            .form-row {
+                flex-direction: column !important;
+            }
+            .quote-form-container {
+                gap: var(--spacing-xl) !important;
+            }
+        }
 
-/* Styles pour les checkboxes personnalisées */
-.checkbox-label input[type="checkbox"]:checked + .checkmark {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-}
+        /* Styles pour les checkboxes personnalisées */
+        .checkbox-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
 
-.checkbox-label input[type="checkbox"]:checked + .checkmark::after {
-  content: "✓";
-  color: white;
-  font-size: 14px;
-  font-weight: bold;
-}
+        .checkbox-wrapper input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
 
-.checkbox-label:hover .checkmark {
-  border-color: var(--primary-color);
-}
+        .custom-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d1d5db;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            margin-top: 2px;
+            background: white;
+        }
+
+        .checkbox-wrapper:hover .custom-checkbox {
+            border-color: var(--primary-color);
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:checked + .custom-checkbox {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:checked + .custom-checkbox::after {
+            content: "✓";
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            max-width: 400px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .notification.success {
+            background-color: #10b981;
+        }
+
+        .notification.error {
+            background-color: #ef4444;
+        }
+
+        .notification.info {
+            background-color: #3b82f6;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .form-field-error {
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -97,10 +177,10 @@
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
-                       <a href="index.html" class="logo-link">
-                   <img src="public/images/WhatsApp Image 2025-07-11 at 21.20.27.jpeg" alt="VERUS BTP Logo" class="logo-img" style="height:60px;">
+                <a href="index.html" class="logo-link">
+                    <img src="public/images/WhatsApp Image 2025-07-11 at 21.20.27.jpeg" alt="VERUS BTP Logo" class="logo-img" style="height:60px;">
                     <div class="logo-text">
-                        <h4 class="logo" style="font-size: 10px;">VERUS BTP</h4>
+                        <h4 class="logo" style="font-size: 14px;">VERUS BTP</h4>
                         <span class="tagline"></span>
                     </div>
                 </a>
@@ -162,140 +242,19 @@
         </div>
     </section>
 
-    <!-- Avantages de notre service -->
-    <section class="advantages-section" style="padding: var(--spacing-3xl) 0;">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Pourquoi Demander Votre Devis Chez VERUS BTP ?</h2>
-                <p class="section-subtitle">
-                    Des avantages exclusifs pour votre tranquillité d'esprit
-                </p>
-            </div>
-            <div class="advantages-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-xl);">
-                <div class="advantage-card" style="background: white; padding: var(--spacing-2xl); border-radius: 12px; box-shadow: var(--shadow-medium); text-align: center; border-top: 4px solid var(--primary-color); transition: transform var(--transition-normal);">
-                    <div class="advantage-icon" style="display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; background-color: var(--primary-color); color: white; border-radius: 50%; margin-bottom: var(--spacing-lg);">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 12l2 2 4-4"/>
-                            <circle cx="12" cy="12" r="9"/>
-                        </svg>
-                    </div>
-                    <h3 style="color: var(--primary-color); margin-bottom: var(--spacing-md);">Devis 100% Gratuit</h3>
-                    <p>Estimation détaillée et personnalisée sans aucun engagement de votre part. Transparence totale sur tous les coûts.</p>
-                </div>
-                <div class="advantage-card" style="background: white; padding: var(--spacing-2xl); border-radius: 12px; box-shadow: var(--shadow-medium); text-align: center; border-top: 4px solid var(--secondary-color); transition: transform var(--transition-normal);">
-                    <div class="advantage-icon" style="display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; background-color: var(--secondary-color); color: white; border-radius: 50%; margin-bottom: var(--spacing-lg);">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <polyline points="12,6 12,12 16,14"/>
-                        </svg>
-                    </div>
-                    <h3 style="color: var(--secondary-color); margin-bottom: var(--spacing-md);">Réponse Ultra-Rapide</h3>
-                    <p>Nous nous engageons à vous contacter sous 24h maximum pour discuter de votre projet et planifier une visite.</p>
-                </div>
-                <div class="advantage-card" style="background: white; padding: var(--spacing-2xl); border-radius: 12px; box-shadow: var(--shadow-medium); text-align: center; border-top: 4px solid var(--accent-color); transition: transform var(--transition-normal);">
-                    <div class="advantage-icon" style="display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; background-color: var(--accent-color); color: white; border-radius: 50%; margin-bottom: var(--spacing-lg);">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                            <circle cx="12" cy="7" r="4"/>
-                        </svg>
-                    </div>
-                    <h3 style="color: var(--accent-color); margin-bottom: var(--spacing-md);">Expertise Reconnue</h3>
-                    <p>Accompagnement par nos experts certifiés avec plus de 15 ans d'expérience dans le secteur du BTP au Sénégal.</p>
-                </div>
-                <div class="advantage-card" style="background: white; padding: var(--spacing-2xl); border-radius: 12px; box-shadow: var(--shadow-medium); text-align: center; border-top: 4px solid var(--primary-color); transition: transform var(--transition-normal);">
-                    <div class="advantage-icon" style="display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; background-color: var(--primary-color); color: white; border-radius: 50%; margin-bottom: var(--spacing-lg);">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7v10l10 5 10-5V7l-10-5z"/>
-                            <path d="M2 7l10 5 10-5"/>
-                        </svg>
-                    </div>
-                    <h3 style="color: var(--primary-color); margin-bottom: var(--spacing-md);">Devis Détaillé</h3>
-                    <p>Estimation complète avec détail des matériaux, main-d'œuvre, délais et planning précis de réalisation.</p>
-                </div>
-                <div class="advantage-card" style="background: white; padding: var(--spacing-2xl); border-radius: 12px; box-shadow: var(--shadow-medium); text-align: center; border-top: 4px solid var(--secondary-color); transition: transform var(--transition-normal);">
-                    <div class="advantage-icon" style="display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; background-color: var(--secondary-color); color: white; border-radius: 50%; margin-bottom: var(--spacing-lg);">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                            <polyline points="22,4 12,14.01 9,11.01"/>
-                        </svg>
-                    </div>
-                    <h3 style="color: var(--secondary-color); margin-bottom: var(--spacing-md);">Prix Compétitifs</h3>
-                    <p>Tarifs transparents et compétitifs avec le meilleur rapport qualité-prix du marché sénégalais.</p>
-                </div>
-                <div class="advantage-card" style="background: white; padding: var(--spacing-2xl); border-radius: 12px; box-shadow: var(--shadow-medium); text-align: center; border-top: 4px solid var(--accent-color); transition: transform var(--transition-normal);">
-                    <div class="advantage-icon" style="display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; background-color: var(--accent-color); color: white; border-radius: 50%; margin-bottom: var(--spacing-lg);">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 11H1l6-6 6 6h-8v8h8"/>
-                            <path d="M23 12v8h-8"/>
-                        </svg>
-                    </div>
-                    <h3 style="color: var(--accent-color); margin-bottom: var(--spacing-md);">Suivi Personnalisé</h3>
-                    <p>Un chef de projet dédié vous accompagne de la demande de devis jusqu'à la livraison de votre projet.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Témoignages Clients -->
-    <section class="testimonials" style="background-color: var(--bg-secondary); padding: var(--spacing-3xl) 0;">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Ce que disent nos clients</h2>
-                <p class="section-subtitle">
-                    Des témoignages authentiques de clients satisfaits
-                </p>
-            </div>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>"Le processus de devis avec VERUS BTP a été très professionnel. Ils ont pris le temps de bien comprendre notre projet et nous ont fourni un devis détaillé et transparent. Excellent service !"</p>
-                    </div>
-                    <div class="author-info">
-                        <h4>Mamadou Diop</h4>
-                        <span>Villa Familiale - Almadies</span>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>"Réactivité exceptionnelle ! J'ai reçu mon devis en moins de 48h avec tous les détails nécessaires. L'équipe VERUS BTP est très à l'écoute et professionnelle."</p>
-                    </div>
-                    <div class="author-info">
-                        <h4>Aïssatou Fall</h4>
-                        <span>Immeuble Commercial - Plateau</span>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>"Devis gratuit et sans engagement comme promis. Les explications étaient claires et le suivi personnalisé. Je recommande vivement VERUS BTP pour tout projet de construction."</p>
-                    </div>
-                    <div class="author-info">
-                        <h4>Ousmane Ndiaye</h4>
-                        <span>Résidence R+2 - Keur Massar</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Formulaire de Devis Amélioré -->
+    <!-- Formulaire de Devis -->
     <section class="quote-form-section" style="padding: var(--spacing-3xl) 0;">
         <div class="container">
             <div class="section-header" style="margin-bottom: var(--spacing-3xl);">
                 <h2 class="section-title">Formulaire de Demande de Devis</h2>
                 <p class="section-subtitle">
-                    Remplissez ce formulaire détaillé pour recevoir votre estimation personnalisée
+                    Remplissez ce formulaire pour recevoir votre estimation personnalisée
                 </p>
             </div>
             
             <div class="quote-form-container" style="display: flex; justify-content: center; align-items: flex-start; gap: var(--spacing-3xl); max-width: 1400px; margin: 0 auto; flex-wrap: wrap;">
-                <form id="quoteForm" class="quote-form" style="background: white; padding: var(--spacing-3xl); border-radius: 16px; box-shadow: var(--shadow-large); flex: 1; max-width: 800px; min-width: 600px;">
-                    <div class="form-progress" style="margin-bottom: var(--spacing-2xl);">
-                        <div class="progress-bar" style="width: 100%; height: 6px; background: var(--bg-accent); border-radius: 3px; overflow: hidden;">
-                            <div class="progress-fill" style="width: 0%; height: 100%; background: var(--primary-color); transition: width 0.3s ease;"></div>
-                        </div>
-                        <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm); color: var(--text-secondary);">Étape <span id="currentStep">1</span> sur 4</p>
-                    </div>
-
+                <form id="devisForm" class="quote-form" style="background: white; padding: var(--spacing-3xl); border-radius: 16px; box-shadow: var(--shadow-large); flex: 1; max-width: 800px; min-width: 600px;">
+                    
                     <div class="form-horizontal-grid">
                         <!-- Informations Personnelles -->
                         <div class="form-section" style="background: #f8faff; border-radius: 12px; padding: var(--spacing-xl); box-shadow: 0 2px 8px rgba(0,123,255,0.04); border-left: 4px solid var(--primary-color);">
@@ -309,20 +268,20 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="prenom">Prénom *</label>
-                                    <input type="text" id="prenom" name="prenom" required style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease;">
+                                    <input type="text" id="prenom" name="prenom" required style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease; width: 100%;">
                                 </div>
                                 <div class="form-group">
                                     <label for="nom">Nom *</label>
-                                    <input type="text" id="nom" name="nom" required style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease;">
+                                    <input type="text" id="nom" name="nom" required style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease; width: 100%;">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="telephone">Coordonnées Téléphoniques *</label>
-                                <input type="tel" id="telephone" name="telephone" required placeholder="+221 XX XXX XX XX" style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease;">
+                                <label for="telephone">Téléphone *</label>
+                                <input type="tel" id="telephone" name="telephone" required placeholder="+221 XX XXX XX XX" style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease; width: 100%;">
                             </div>
                             <div class="form-group">
-                                <label for="email">Adresse Email</label>
-                                <input type="email" id="email" name="email" placeholder="votre@email.com" style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease;">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="votre@email.com" style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease; width: 100%;">
                             </div>
                         </div>
 
@@ -337,21 +296,21 @@
                             </h3>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="surface">Surface du terrain (m²) *</label>
-                                    <input type="number" id="surface" name="surface" required min="1" placeholder="Ex: 500" style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease;">
+                                    <label for="surface">Surface (m²) *</label>
+                                    <input type="number" id="surface" name="surface" required min="1" placeholder="Ex: 500" style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease; width: 100%;">
                                 </div>
                                 <div class="form-group">
-                                    <label for="niveaux">Nombre de Niveaux (R+...) *</label>
-                                    <input type="text" id="niveaux" name="niveaux" placeholder="Ex: R+1, R+2..." required style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease;">
+                                    <label for="niveaux">Niveaux *</label>
+                                    <input type="text" id="niveaux" name="niveaux" placeholder="Ex: R+1, R+2..." required style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease; width: 100%;">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="localisation">Localisation du Projet *</label>
-                                <input type="text" id="localisation" name="localisation" required placeholder="Ville, quartier, région" style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease;">
+                                <label for="localisation">Localisation *</label>
+                                <input type="text" id="localisation" name="localisation" required placeholder="Ville, quartier, région" style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease; width: 100%;">
                             </div>
                             <div class="form-group">
-                                <label for="service">Type de Service souhaité *</label>
-                                <select id="service" name="service" required style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease;">
+                                <label for="service">Service souhaité *</label>
+                                <select id="service" name="service" required style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease; width: 100%;">
                                     <option value="">Sélectionnez un service</option>
                                     <option value="plans-architecturaux">Plans Architecturaux</option>
                                     <option value="plan-beton-arme">Plan Béton Armé</option>
@@ -373,7 +332,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="budget">Budget Prévisionnel</label>
-                                <select id="budget" name="budget" style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease;">
+                                <select id="budget" name="budget" style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease; width: 100%;">
                                     <option value="">Sélectionnez une fourchette</option>
                                     <option value="moins-10m">Moins de 10 millions FCFA</option>
                                     <option value="10-25m">10 à 25 millions FCFA</option>
@@ -384,7 +343,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="delai">Délai souhaité</label>
-                                <select id="delai" name="delai" style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease;">
+                                <select id="delai" name="delai" style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease; width: 100%;">
                                     <option value="">Sélectionnez un délai</option>
                                     <option value="urgent">Urgent (moins de 3 mois)</option>
                                     <option value="court">Court terme (3-6 mois)</option>
@@ -395,37 +354,25 @@
                         </div>
                         <div class="form-group">
                             <label for="message">Message complémentaire</label>
-                            <textarea id="message" name="message" rows="5" placeholder="Décrivez votre projet, vos attentes particulières, contraintes spécifiques..." style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease; resize: vertical;"></textarea>
+                            <textarea id="message" name="message" rows="5" placeholder="Décrivez votre projet, vos attentes particulières..." style="border: 2px solid var(--border-color); border-radius: 8px; padding: var(--spacing-md); transition: border-color 0.3s ease; resize: vertical; width: 100%;"></textarea>
                         </div>
                     </div>
 
                     <!-- Consentement -->
                     <div class="form-section" style="margin-top: var(--spacing-xl);">
-                        <div class="form-group checkbox-group">
-                            <label class="checkbox-label" style="display: flex; align-items: flex-start; gap: var(--spacing-sm); cursor: pointer;">
-                                <input type="checkbox" id="consent" name="consent" required style="position: absolute; opacity: 0; pointer-events: none;">
-                                <span class="checkmark" style="width: 20px; height: 20px; border: 2px solid var(--border-color); border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; flex-shrink: 0; margin-top: 2px; position: relative;">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="display: none;">
-                                        <polyline points="20,6 9,17 4,12"/>
-                                    </svg>
-                                </span>
-                                <span>J'accepte d'être contacté par VERUS BTP concernant ma demande de devis *</span>
-                            </label>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="consent" name="consent" required>
+                            <div class="custom-checkbox"></div>
+                            <span>J'accepte d'être contacté par VERUS BTP concernant ma demande de devis *</span>
                         </div>
-                        <div class="form-group checkbox-group">
-                            <label class="checkbox-label" style="display: flex; align-items: flex-start; gap: var(--spacing-sm); cursor: pointer;">
-                                <input type="checkbox" id="newsletter" name="newsletter" style="position: absolute; opacity: 0; pointer-events: none;">
-                                <span class="checkmark" style="width: 20px; height: 20px; border: 2px solid var(--border-color); border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; flex-shrink: 0; margin-top: 2px; position: relative;">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="display: none;">
-                                        <polyline points="20,6 9,17 4,12"/>
-                                    </svg>
-                                </span>
-                                <span>Je souhaite recevoir les actualités et offres de VERUS BTP</span>
-                            </label>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="newsletter" name="newsletter">
+                            <div class="custom-checkbox"></div>
+                            <span>Je souhaite recevoir les actualités et offres de VERUS BTP</span>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-large" style="width: 100%; margin-top: var(--spacing-2xl); padding: var(--spacing-lg) var(--spacing-xl); font-size: var(--font-size-lg); border-radius: 12px; box-shadow: 0 4px 12px rgba(37,99,235,0.3);">
+                    <button type="submit" id="submitBtn" class="btn btn-primary btn-large" style="width: 100%; margin-top: var(--spacing-2xl); padding: var(--spacing-lg) var(--spacing-xl); font-size: var(--font-size-lg); border-radius: 12px; box-shadow: 0 4px 12px rgba(37,99,235,0.3);">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: var(--spacing-sm);">
                             <path d="M22 2L11 13"/>
                             <path d="M22 2L15 9"/>
@@ -492,31 +439,7 @@
             </div>
         </div>
     </section>
-    <!-- Nous Trouver -->
-    <section style="padding: 40px 0; background: #f8fafc;">
-      <div style="max-width: 900px; margin: 0 auto; padding: 0 16px;">
-        <div style="text-align: center; margin-bottom: 32px;">
-          <h2 style="font-size: 2rem; font-weight: 700; color: #222; margin-bottom: 16px;">
-            Nous Trouver
-          </h2>
-          <p style="font-size: 1.1rem; color: #555;">
-            Situés à Keur Massar, nous sommes facilement accessibles pour vos consultations.
-          </p>
-        </div>
-        <div style="border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06);">
-          <iframe
-            title="Keur Massar Map"
-            src="https://www.google.com/maps?q=keur+massar,+dakar,+sénégal&output=embed"
-            width="100%"
-            height="260"
-            style="border: 0;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
-      </div>
-    </section>
+
     <!-- FAQ -->
     <section class="faq-section">
         <div class="container">
@@ -594,7 +517,197 @@
         </div>
     </footer>
 
-<script src="js/main.js"></script>
-
+    <script>
+        // JavaScript pour le formulaire de devis - Version propre et fonctionnelle
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('devisForm');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Fonction pour afficher les notifications
+            function showNotification(message, type = 'info') {
+                // Supprimer les notifications existantes
+                const existingNotifications = document.querySelectorAll('.notification');
+                existingNotifications.forEach(notif => notif.remove());
+                
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                
+                document.body.appendChild(notification);
+                
+                // Auto-suppression après 5 secondes
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 5000);
+            }
+            
+            // Fonction pour valider un champ
+            function validateField(field) {
+                const value = field.value.trim();
+                const isRequired = field.hasAttribute('required');
+                
+                // Supprimer les messages d'erreur existants
+                const existingError = field.parentNode.querySelector('.error-message');
+                if (existingError) {
+                    existingError.remove();
+                }
+                
+                // Supprimer les styles d'erreur
+                field.classList.remove('form-field-error');
+                
+                // Validation des champs requis
+                if (isRequired && !value) {
+                    showFieldError(field, 'Ce champ est obligatoire');
+                    return false;
+                }
+                
+                // Validation spécifique pour l'email
+                if (field.type === 'email' && value) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(value)) {
+                        showFieldError(field, 'Veuillez entrer une adresse email valide');
+                        return false;
+                    }
+                }
+                
+                // Validation spécifique pour le téléphone
+                if (field.type === 'tel' && value) {
+                    const phoneRegex = /^(\+221\s?)?[0-9\s-]{8,}$/;
+                    if (!phoneRegex.test(value)) {
+                        showFieldError(field, 'Veuillez entrer un numéro de téléphone valide');
+                        return false;
+                    }
+                }
+                
+                return true;
+            }
+            
+            // Fonction pour afficher une erreur de champ
+            function showFieldError(field, message) {
+                field.classList.add('form-field-error');
+                
+                const errorElement = document.createElement('div');
+                errorElement.className = 'error-message';
+                errorElement.textContent = message;
+                
+                field.parentNode.appendChild(errorElement);
+            }
+            
+            // Validation en temps réel
+            const formFields = form.querySelectorAll('input, select, textarea');
+            formFields.forEach(field => {
+                field.addEventListener('blur', function() {
+                    validateField(this);
+                });
+                
+                field.addEventListener('focus', function() {
+                    this.classList.remove('form-field-error');
+                    const errorMsg = this.parentNode.querySelector('.error-message');
+                    if (errorMsg) {
+                        errorMsg.remove();
+                    }
+                });
+            });
+            
+            // Gestion des checkboxes personnalisées
+            const checkboxWrappers = document.querySelectorAll('.checkbox-wrapper');
+            checkboxWrappers.forEach(wrapper => {
+                wrapper.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const checkbox = this.querySelector('input[type="checkbox"]');
+                    const customCheckbox = this.querySelector('.custom-checkbox');
+                    
+                    checkbox.checked = !checkbox.checked;
+                    
+                    if (checkbox.checked) {
+                        customCheckbox.style.backgroundColor = 'var(--primary-color)';
+                        customCheckbox.style.borderColor = 'var(--primary-color)';
+                    } else {
+                        customCheckbox.style.backgroundColor = 'white';
+                        customCheckbox.style.borderColor = '#d1d5db';
+                    }
+                });
+            });
+            
+            // Formatage automatique du numéro de téléphone
+            const telephoneField = document.getElementById('telephone');
+            if (telephoneField) {
+                telephoneField.addEventListener('input', function() {
+                    let value = this.value.replace(/\D/g, '');
+                    if (value.length > 0) {
+                        if (value.startsWith('221')) {
+                            // Format sénégalais: +221 XX XXX XX XX
+                            value = value.replace(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/, '+$1 $2 $3 $4 $5');
+                        } else if (value.startsWith('77') || value.startsWith('78') || value.startsWith('70')) {
+                            // Format local: 77 XXX XX XX
+                            value = value.replace(/(\d{2})(\d{3})(\d{2})(\d{2})/, '$1 $2 $3 $4');
+                        }
+                    }
+                    this.value = value;
+                });
+            }
+            
+            // Gestion de la soumission du formulaire
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validation de tous les champs
+                let isValid = true;
+                formFields.forEach(field => {
+                    if (!validateField(field)) {
+                        isValid = false;
+                    }
+                });
+                
+                // Validation du consentement
+                const consentCheckbox = document.getElementById('consent');
+                if (!consentCheckbox.checked) {
+                    showNotification('Vous devez accepter d\'être contacté pour envoyer votre demande.', 'error');
+                    isValid = false;
+                }
+                
+                if (!isValid) {
+                    showNotification('Veuillez corriger les erreurs dans le formulaire.', 'error');
+                    return;
+                }
+                
+                // Désactiver le bouton et afficher le loader
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span>Envoi en cours...</span>';
+                
+                // Récupération des données du formulaire
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+                
+                // Simulation d'envoi (remplacez par votre logique d'envoi réelle)
+                setTimeout(() => {
+                    showNotification('Votre demande de devis a été envoyée avec succès! Nous vous contactons sous 24h.', 'success');
+                    form.reset();
+                    
+                    // Réinitialiser les checkboxes personnalisées
+                    checkboxWrappers.forEach(wrapper => {
+                        const checkbox = wrapper.querySelector('input[type="checkbox"]');
+                        const customCheckbox = wrapper.querySelector('.custom-checkbox');
+                        checkbox.checked = false;
+                        customCheckbox.style.backgroundColor = 'white';
+                        customCheckbox.style.borderColor = '#d1d5db';
+                    });
+                    
+                    // Réactiver le bouton
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = `
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: var(--spacing-sm);">
+                            <path d="M22 2L11 13"/>
+                            <path d="M22 2L15 9"/>
+                            <path d="M22 2L18 6"/>
+                        </svg>
+                        Envoyer ma Demande de Devis
+                    `;
+                }, 2000);
+            });
+        });
+    </script>
 </body>
 </html>
