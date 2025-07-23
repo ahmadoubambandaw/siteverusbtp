@@ -290,14 +290,37 @@ function initializeAnimations() {
 
 // Navbar transparente/solide au scroll
 window.addEventListener('scroll', () => {
-    if (navbar && window.scrollY > 100) {
-        navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+    if (navbar && window.scrollY > 50) {
+        navbar.classList.add('scrolled');
     } else if (navbar) {
-        navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.boxShadow = 'none';
+        navbar.classList.remove('scrolled');
     }
 });
+
+// Animation des éléments de navigation au chargement
+document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach((link, index) => {
+        link.style.animationDelay = `${index * 0.1}s`;
+        link.style.animation = 'fadeInUp 0.6s ease forwards';
+    });
+});
+
+// Ajout des animations CSS
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+document.head.appendChild(style);
 
 // Smooth scroll pour les liens internes
 document.addEventListener('DOMContentLoaded', function() {
